@@ -1,0 +1,46 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+      <!--
+          Create a Form with the following Controls and Validators
+          1) Project Name (should not be empty)
+          2) Mail (should not be a empty and a valid email)
+          3) Project Status Dropdown, with three values: 'Stable', 'Critical', 'Finished'
+          4) Submit Button
+
+          Add your own Validator which doesn't allow "Test" as a Project Name
+
+          Also implement that Validator as an async Validator (replace the other one)
+
+          Upon submitting the form, simply print the value to the console
+      -->
+      <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="name">Project name:</label>
+          <input id="name" type="text" class="form-control" formControlName="projectName">
+        </div>
+        <span class="help-block" *ngIf="!myForm.get('projectName').valid && myForm.get('projectName').touched">
+          <span *ngIf="myForm.get('projectName').errors['forbiddenName']">Can't use 'Test' as project name</span>
+          <span *ngIf="myForm.get('projectName').errors['required']">Can't be empty!</span>
+        </span>
+        <div class="form-group">
+          <label for="mail">Mail:</label>
+          <input id="mail" type="text" class="form-control" formControlName="mail">
+        </div>
+        <span class="help-block" *ngIf="!myForm.get('mail').valid && myForm.get('mail').touched">
+          <span *ngIf="myForm.get('mail').errors['email']">Choose valid email format!</span>
+          <span *ngIf="myForm.get('mail').errors['required']">Can't be empty!</span>
+        </span>
+        <div class="form-group">
+          <label for="prjStatus">Project Status:</label>
+          <select id="prjStatus" class="form-control" formControlName="projectStatus">
+            <option value="stable">Stable</option>
+            <option value="critical">Critical</option>
+            <option value="finished">Finished</option>
+          </select>
+        </div>
+        <button class="btn-btn-primary" type="submit">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>
