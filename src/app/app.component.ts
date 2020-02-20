@@ -8,17 +8,16 @@ import { Observable } from 'rxjs';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  myForm: FormGroup;
+  projectForm: FormGroup;
 
   // projectStatuses = ['Stable', 'Critical', 'Finished'];
 
   ngOnInit(): void {
-    this.myForm = new FormGroup({
+    this.projectForm = new FormGroup({
       // 'projectName': new FormControl(null, [Validators.required, this.forbiddenNames.bind(this)]),
-      // 'projectName': new FormControl(null, [Validators.required]),
       'projectName': new FormControl(null, Validators.required, this.forbiddenNamesAsync),
       'mail': new FormControl(null, [Validators.required, Validators.email]),
-      'projectStatus': new FormControl(null)
+      'projectStatus': new FormControl('critical')
     });
   }
 
@@ -44,7 +43,7 @@ export class AppComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.myForm);
+    console.log(this.projectForm);
     // this.myForm.reset();
   }
 }

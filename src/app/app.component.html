@@ -14,22 +14,25 @@
 
           Upon submitting the form, simply print the value to the console
       -->
-      <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+      <form [formGroup]="projectForm" (ngSubmit)="onSubmit()">
         <div class="form-group">
           <label for="name">Project name:</label>
           <input id="name" type="text" class="form-control" formControlName="projectName">
         </div>
-        <span class="help-block" *ngIf="!myForm.get('projectName').valid && myForm.get('projectName').touched">
-          <span *ngIf="myForm.get('projectName').errors['forbiddenName']">Can't use 'Test' as project name</span>
-          <span *ngIf="myForm.get('projectName').errors['required']">Can't be empty!</span>
+        <span class="help-block" *ngIf="!projectForm.get('projectName').valid && projectForm.get('projectName').touched">
+<!--          // For angular v8.2.14 is ok, but not for v9.0.2 - use hasErrors-->
+<!--          <span *ngIf="projectForm.get('projectName').errors['required']">Can't be empty!</span>-->
+<!--          <span *ngIf="projectForm.get('projectName').errors['forbiddenName']">Can't use 'Test' as project name</span>-->
+          <span *ngIf="projectForm.get('projectName').hasError('forbiddenName')">Can't use 'Test' as project name</span>
+          <span *ngIf="projectForm.get('projectName').hasError('required')">Can't be empty!</span>
         </span>
         <div class="form-group">
           <label for="mail">Mail:</label>
           <input id="mail" type="text" class="form-control" formControlName="mail">
         </div>
-        <span class="help-block" *ngIf="!myForm.get('mail').valid && myForm.get('mail').touched">
-          <span *ngIf="myForm.get('mail').errors['email']">Choose valid email format!</span>
-          <span *ngIf="myForm.get('mail').errors['required']">Can't be empty!</span>
+        <span class="help-block" *ngIf="!projectForm.get('mail').valid && projectForm.get('mail').touched">
+          <span *ngIf="projectForm.get('mail').errors['email']">Choose valid email format!</span>
+          <span *ngIf="projectForm.get('mail').errors['required']">Can't be empty!</span>
         </span>
         <div class="form-group">
           <label for="prjStatus">Project Status:</label>
