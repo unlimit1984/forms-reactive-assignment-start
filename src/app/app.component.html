@@ -22,8 +22,8 @@
         <span class="help-block" *ngIf="!projectForm.get('projectName').valid && projectForm.get('projectName').touched">
 <!--          // For angular v8.2.14 is ok, but not for v9.0.2 - use hasErrors-->
 <!--          <span *ngIf="projectForm.get('projectName').errors['required']">Can't be empty!</span>-->
-<!--          <span *ngIf="projectForm.get('projectName').errors['forbiddenName']">Can't use 'Test' as project name</span>-->
-          <span *ngIf="projectForm.get('projectName').hasError('forbiddenName')">Can't use 'Test' as project name</span>
+<!--          <span *ngIf="projectForm.get('projectName').errors['invalidProjectName']">Can't use 'Test' as project name</span>-->
+          <span *ngIf="projectForm.get('projectName').hasError('invalidProjectName')">Can't use 'Test' as project name</span>
           <span *ngIf="projectForm.get('projectName').hasError('required')">Can't be empty!</span>
         </span>
         <div class="form-group">

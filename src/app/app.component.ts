@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
+import { CustomValidators } from './custom-validators';
 
 @Component({
   selector: 'app-root',
@@ -14,26 +15,35 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.projectForm = new FormGroup({
-      // 'projectName': new FormControl(null, [Validators.required, this.forbiddenNames.bind(this)]),
-      'projectName': new FormControl(null, Validators.required, this.forbiddenNamesAsync),
+      // 1st approach sync
+      // 'projectName': new FormControl(null, [Validators.required, this.invalidProjectName.bind(this)]),
+      // 1st approach async
+      // 'projectName': new FormControl(null, Validators.required, this.asyncInvalidProjectName),
+      // 2nd approach sync
+      // 'projectName': new FormControl(null, [Validators.required, CustomValidators.invalidProjectName.bind(this)]),
+      // 2nd approach async
+      // 'projectName': new FormControl(null, Validators.required, CustomValidators.asyncInvalidProjectName),
+      'projectName': new FormControl(null, [Validators.required, CustomValidators.invalidProjectName.bind(this)], CustomValidators.asyncInvalidProjectName),
       'mail': new FormControl(null, [Validators.required, Validators.email]),
       'projectStatus': new FormControl('critical')
     });
   }
 
-  forbiddenNames(control: FormControl): { [s: string]: boolean } {
+  // 1st approach sync
+  invalidProjectName(control: FormControl): { [s: string]: boolean } {
     if (control.value === 'Test') {
-      return {'forbiddenName': true};
+      return {'invalidProjectName': true};
     } else {
       return null;
     }
   }
 
-  forbiddenNamesAsync(control: FormControl): Promise<any> | Observable<any> {
+  // 1st approach async
+  asyncInvalidProjectName(control: FormControl): Promise<any> | Observable<any> {
     const promise = new Promise<any>((resolve, reject) => {
       setTimeout(() => {
-        if (control.value === 'Test') {
-          resolve({'forbiddenName': true});
+        if (control.value === 'TestAsync') {
+          resolve({'invalidProjectName': true});
         } else {
           return resolve(null);
         }
